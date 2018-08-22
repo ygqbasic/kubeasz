@@ -3,27 +3,32 @@ CentOS release 6.7 (Final)
 
 ## 服务端配置
 ### 1. 安装nfs-utils和rpcbind
-
+``` bash
 yum install -y nfs-utils rpcbind
-
+```
 ### 2.设置开机启动服务
+``` bash
 chkconfig nfs on
 
 chkconfig rpcbind on
-
+```
 ### 3.启动相关服务
+``` bash
 service rpcbind start
 
 service nfs start
-
+```
 ### 4.创建共享目录
+``` bash
 mkdir  /share
-
+```
 ### 5.编辑/etc/exports文件添加如下内容
+``` bash
 vim /etc/exports
 
 /share client_ip(rw,no_root_squash,no_subtree_check)
-
+```
+``` bash
 客户端的指定方式：
 
 指定ip地址的主机：192.168.0.100
@@ -50,36 +55,48 @@ wdelay（默认）：检查是否有相关的写操作，如果有则将这些�
 no_wdelay：若有写操作则立即执行，应与sync配合使用；
 subtree_check（默认） ：若输出目录是一个子目录，则nfs服务器将检查其父目录的权限；
 no_subtree_check ：即使输出目录是一个子目录，nfs服务器也不检查其父目录的权限，这样可以提高效率；
-
+```
 ### 6.刷新配置立即生效
+``` bash
 exportfs -a
-
+```
 ## 客户端配置
 ### 1. 安装nfs-utils和rpcbind
+``` bash
 yum install nfs-utils rpcbind
-
+```
 ### 2.设置开机启动服务
+``` bash
 chkconfig nfs on
 chkconfig rpcbind on
-
+```
 ### 3.启动服务
+``` bash
 service rpcbind start
 service nfs start
-
+```
 ### 4.创建挂载点
+``` bash
 mkdir -p /mnt/share
-
+```
 ### 5.挂载目录
+``` bash
 mount -t nfs server_ip:/share /mnt/share
-
+```
 ### 6.查看挂载的目录
+``` bash
 df -h
-
+```
 ### 7.卸载挂载的目录
+``` bash
 umount /mnt/share
-
+```
 ### 8.编辑/etc/fstab，开机自动挂载
+``` bash
 vim /etc/fstab
+```
+``` bash
+在结尾添加如下一行
 
-# 在结尾添加如下一行
 server_ip:/share /mnt/share nfs rw,tcp,intr 0 1
+```
