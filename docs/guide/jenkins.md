@@ -33,6 +33,10 @@ Error: transport is closing
 ```
 helms install manifests/jenkins/ --name jenkins
 ```
+安装失败可以通过下面命令删除jenkins:
+```
+helms del --purge jenkins
+```
 
 由于初始化过程中，默认安装指定的插件，所以启动较慢，大概5-10分钟左右就可以启动完成了。  
 
