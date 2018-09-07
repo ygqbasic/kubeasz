@@ -1,27 +1,24 @@
-# Jenkins CI/CD
+# GitLab CI/CD
 
 ## 前言
-本文档介绍如何快速通过K8s集群实现Jenkins 动态Slave CI/CD流程。
+本文档介绍如何快速通过K8s集群实现部署GitLab。
 
 ## 开始之前
 在开始之前需要准备以下环境：
 - k8s dns组件  
 参考文档：[kubedns](kubedns.md)
 - helm  
-为了简化部署，通过helm来安装Jenkins，可参考文档：[helm](helm.md)
+为了简化部署，通过helm来安装gitlab，可参考文档：[helm](helm.md)
 - 持久化存储  
 这里使用**NFS**演示，参考文档：[cluster-storage](../08-cluster-storage.md)。
 如果k8s集群是部署在公有云，也可使用厂商的NAS等存储方案，项目中已集成支持阿里云NAS，其他的方案参考相关厂商文档
 
 - Ingress Controller(nginx-ingress/traefik)  
 默认是通过Ingress访问Jenkins，因此需要安装一种`Ingress Controller`。参考文档：[ingress](ingress.md)
-- Gitlab 代码管理仓库  
-用于提交代码后自动触发CI, 目前项目中还没有相关内容，可[参考官网](https://about.gitlab.com/installation/)进行安装。
 
-## 安装Jenkins
-执行以下命令快速安装：
+## 安装Gitlab执行以下命令快速安装：
 ```
-helm install manifests/jenkins/ --name jenkins
+helm install --name gitlab -f manifests/gitlab-ce/values.yaml stable/gitlab-ce
 ```
 如果通过/etc/ansible/roles/helm/helm.yml安装的helm，安装过程会出现如下错误
 
@@ -31,17 +28,17 @@ Error: transport is closing
 ```
 请执行以下命令快速安装进行修复：
 ```
-helms install manifests/jenkins/ --name jenkins
+helm install --name gitlab -f manifests/gitlab-ce/values.yaml stable/gitlab-ce
 ```
-安装失败可以通过下面命令删除jenkins:
+安装失败可以通过下面命令删除gitlab:
 ```
-helms del --purge jenkins
+helms del --purge gitlab
 ```
 
 由于初始化过程中，默认安装指定的插件，所以启动较慢，大概5-10分钟左右就可以启动完成了。  
 
 部分默认配置说明：
-**注**：以下配置都定义在`manifests/jenkins/values.yaml`文件中。
+**注**：以下配置都定义在`manifests/gitlab-ce/values.yaml`文件中。
 <table border="0">
     <tr>
         <td><b>字段</b></td>
