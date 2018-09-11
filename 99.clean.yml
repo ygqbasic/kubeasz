@@ -161,8 +161,23 @@
     - "/etc/haproxy"
     - "/etc/keepalived"
 
-- hosts: all
+- hosts:
+  - kube-master
+  - new-master
+  - kube-node
+  - new-node
+  - deploy
+  - etcd
+  - lb
   tasks:
+  - name: stop and disable chrony
+    service: name={{ item }} state=stopped enabled=no
+    with_items:
+    - chrony
+    - chronyd
+    ignore_errors: true
+    tags: rm_ntp 
+
   - name: 清理证书目录和文件
     file: name={{ item }} state=absent
     with_items:

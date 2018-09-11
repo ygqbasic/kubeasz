@@ -7,13 +7,17 @@
     file: name={{ base_dir }}/roles/{{ item }}/vars state=directory
     with_items:
     - calico
+    - chrony
     - cilium
     - cluster-addon
     - cluster-restore
     - cluster-storage
     - docker 
+    - etcd 
     - flannel
+    - harbor
     - helm
+    - kube-master
     - kube-node
     - kube-router
     - lb
@@ -25,13 +29,17 @@
       force: "yes"
     with_items:
     - calico
+    - chrony
     - cilium
     - cluster-addon
     - cluster-restore
     - cluster-storage
     - docker 
+    - etcd 
     - flannel
+    - harbor
     - helm
+    - kube-master
     - kube-node
     - kube-router
     - lb
