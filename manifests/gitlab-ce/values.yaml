@@ -12,7 +12,7 @@ image: gitlab/gitlab-ce:9.4.1-ce.0
 ## The URL (with protocol) that your users will use to reach the install.
 ## ref: https://docs.gitlab.com/omnibus/settings/configuration.html#configuring-the-external-url-for-gitlab
 ##
-#externalUrl: http://your-domain.com/
+externalUrl: http://gitlab.test.com/
 
 ## Change the initial default admin password if set. If not set, you'll be
 ## able to set it when you first visit your install.
@@ -103,6 +103,8 @@ postgresql:
 
   persistence:
     size: 10Gi
+    storageClass: "nfs-dynamic-class"
+    accessMode: ReadWriteOnce
 
 ## Configuration values for the redis dependency.
 ## ref: https://github.com/kubernetes/charts/blob/master/stable/redis/README.md
@@ -116,3 +118,5 @@ redis:
 
   persistence:
     size: 10Gi
+    storageClass: "nfs-dynamic-class"
+    accessMode: ReadWriteOnce

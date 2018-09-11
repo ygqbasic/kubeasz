@@ -20,8 +20,8 @@ Master:
   AdminPassword: admin
   resources:
     requests:
-      cpu: "50m"
-      memory: "256Mi"
+      cpu: "500m"
+      memory: "1024Mi"
     limits:
       cpu: "2000m"
       memory: "2048Mi"
@@ -52,14 +52,14 @@ Master:
   ServiceAnnotations: {}
   #   service.beta.kubernetes.io/aws-load-balancer-backend-protocol: https
   # Used to create Ingress record (should used with ServiceType: ClusterIP)
-  HostName: jenkins.local.com
+  HostName: jenkins.test.com
   # NodePort: <to set explicitly, choose port between 30000-32767
   ContainerPort: 8080
   # Enable Kubernetes Liveness and Readiness Probes
   # ~ 2 minutes to allow Jenkins to restart when upgrading plugins. Set ReadinessTimeout to be shorter than LivenessTimeout.
   HealthProbes: true
-  HealthProbesLivenessTimeout: 90
-  HealthProbesReadinessTimeout: 60
+  HealthProbesLivenessTimeout: 300
+  HealthProbesReadinessTimeout: 180
   HealthProbeLivenessFailureThreshold: 12
   SlaveListenerPort: 50000
   DisabledAgentProtocols:
@@ -140,18 +140,18 @@ Master:
 
 Agent:
   Enabled: true
-  Image: jenkinsci/jnlp-slave
-  ImageTag: alpine
+  Image: registry.cn-hangzhou.aliyuncs.com/ygqbasic/jenkins-jdk8-mvn
+  ImageTag: latest
 # ImagePullSecret: jenkins
   Component: "jenkins-slave"
   Privileged: false
   resources:
     requests:
-      cpu: "200m"
-      memory: "256Mi"
+      cpu: "500m"
+      memory: "1024Mi"
     limits:
-      cpu: "200m"
-      memory: "256Mi"
+      cpu: "500m"
+      memory: "1024Mi"
   # You may want to change this to true while testing a new image
   AlwaysPullImage: false
   # You can define the volumes that you want to mount for this container
