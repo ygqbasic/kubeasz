@@ -20,13 +20,14 @@ service nfs start
 ```
 ### 4.创建共享目录
 ``` bash
-mkdir  /share
+mkdir /data/nfs
+
 ```
 ### 5.编辑/etc/exports文件添加如下内容
 ``` bash
 vim /etc/exports
 
-/share client_ip(rw,no_root_squash,no_subtree_check)
+/data/nfs 10.1.12.0/24(rw,no_root_squash,no_all_squash,sync)
 ```
 ``` bash
 客户端的指定方式：
