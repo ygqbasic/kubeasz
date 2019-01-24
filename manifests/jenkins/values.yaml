@@ -11,7 +11,7 @@
 Master:
   Name: jenkins-master
   Image: "jenkins/jenkins"
-  ImageTag: "2.121.3-alpine"
+  ImageTag: "lts"
   ImagePullPolicy: "IfNotPresent"
 # ImagePullSecret: jenkins
   Component: "jenkins-master"
@@ -52,7 +52,7 @@ Master:
   ServiceAnnotations: {}
   #   service.beta.kubernetes.io/aws-load-balancer-backend-protocol: https
   # Used to create Ingress record (should used with ServiceType: ClusterIP)
-  HostName: jenkins.test.com
+  HostName: jenkins-adc.test.com
   # NodePort: <to set explicitly, choose port between 30000-32767
   ContainerPort: 8080
   # Enable Kubernetes Liveness and Readiness Probes
@@ -94,9 +94,9 @@ Master:
 
   # List of plugins to be install during Jenkins master start
   InstallPlugins:
-    - kubernetes:1.12.4
+    - kubernetes:1.10.0
     - workflow-aggregator:2.5
-    - workflow-job:2.24
+    - workflow-job:2.21
     - credentials-binding:1.16
     - git:3.9.1
     - gitlab:1.5.9
@@ -149,10 +149,10 @@ Agent:
   resources:
     requests:
       cpu: "500m"
-      memory: "1024Mi"
+      memory: "2048Mi"
     limits:
       cpu: "500m"
-      memory: "1024Mi"
+      memory: "2048Mi"
   # You may want to change this to true while testing a new image
   AlwaysPullImage: false
   # You can define the volumes that you want to mount for this container
